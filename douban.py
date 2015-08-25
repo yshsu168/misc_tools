@@ -17,7 +17,6 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 while True:
-# if True:
     # connect to doubanfm web server
     httpConnection = httplib.HTTPConnection('douban.fm')
     httpConnection.request('GET', '/j/mine/playlist?type=n&channel=10')
@@ -25,28 +24,7 @@ while True:
 
     # dump the required field and play it with mpg321
     for curr_song in song:
-       print curr_song['title'] + ":" +  str(curr_song['length']) + " seconds"
+       print "Title: " + curr_song['title'] + "\tDuration: " +  str(curr_song['length']) + " seconds"
        # print curr_song['url']
        mpd_cmd = subprocess.Popen(['mpg321', curr_song['url']])
        mpd_cmd.wait()
-       # time.sleep(curr_song['length'])
-
-    '''
-    picture = 'images/' + song[0]['picture'].split('/')[4]
-
-    # 下载专辑封面
-    if not os.path.exists(picture):
-        subprocess.call([
-            'wget',
-            '-P',
-            'images',
-            song[0]['picture']])
-
-    # 发送桌面通知
-    subprocess.call([
-        'notify-send',
-        '-i',
-        os.getcwd() + '/' + picture,
-        song[0]['title'],
-        song[0]['artist'] + '\n' + song[0]['albumtitle']])
-    '''
